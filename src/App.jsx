@@ -11,6 +11,10 @@ function Header() {
   );
 }
 
+function Test() {
+  return <div>Test</div>;
+}
+
 function App() {
   return (
     <div>
