@@ -1,8 +1,16 @@
-import { CORE_CONCEPTS } from "../data";
+import { useState } from "react";
+import { CORE_CONCEPTS, EXAMPLES } from "../data";
 import CoreConcepts from "./components/CoreConcepts";
 import Header from "./components/Header/Header";
+import { TabButton } from "./components/TabButton/TabButton";
 
 function App() {
+  const [tabContent, setTabContent] = useState();
+
+  function handleSelect(selectedButton) {
+    setTabContent(selectedButton);
+  }
+
   return (
     <div>
       <Header />
@@ -34,14 +42,47 @@ function App() {
             />
           </ul>
         </section>
-        <h2>Time to get started!</h2>
+        <section id="examples">
+          <menu>
+            <TabButton
+              isSelected={tabContent === "components"}
+              onSelect={() => handleSelect("components")}
+            >
+              Components
+            </TabButton>
+            <TabButton
+              isSelected={tabContent === "jsx"}
+              onSelect={() => handleSelect("jsx")}
+            >
+              Props
+            </TabButton>
+            <TabButton
+              isSelected={tabContent === "props"}
+              onSelect={() => handleSelect("props")}
+            >
+              State
+            </TabButton>
+            <TabButton
+              isSelected={tabContent === "state"}
+              onSelect={() => handleSelect("state")}
+            >
+              Lifecycle
+            </TabButton>
+          </menu>
+          {!tabContent && <p>Click on a tab to see the content.</p>}
+          {tabContent && (
+            <div id="tab-content">
+              <h3>{EXAMPLES[tabContent]?.title}</h3>
+              <p>{EXAMPLES[tabContent]?.description}</p>
+              <pre>
+                <code>{EXAMPLES[tabContent]?.code}</code>
+              </pre>
+            </div>
+          )}
+        </section>
       </main>
     </div>
   );
-}
-
-function Test() {
-  return <div>Test</div>;
 }
 
 export default App;
